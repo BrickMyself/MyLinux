@@ -1,0 +1,39 @@
+
+calhost Test1]$ cp test.c MyLinux/
+[hfy@localhost Test1]$ ls
+Makefile  test    test.i  test.s
+MyLinux   test.c  test.o
+[hfy@localhost Test1]$ cd MyLinux/
+[hfy@localhost MyLinux]$ ls
+test.c
+[hfy@localhost MyLinux]$ git add ./*
+[hfy@localhost MyLinux]$ git commit -m"第一次提交代码"
+[master（根提交） 804a5d3] 第一次提交代码
+ Committer: hfy <hfy@localhost.localdomain>
+您的姓名和邮件地址基于登录名和主机名进行了自动设置。请检查它们正确
+与否。您可以通过下面的命令对其进行明确地设置以免再出现本提示信息：
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+设置完毕后，您可以用下面的命令来修正本次提交所使用的用户身份：
+
+    git commit --amend --reset-author
+
+ 1 file changed, 37 insertions(+)
+ create mode 100644 test.c
+[hfy@localhost MyLinux]$ ls
+test.c
+[hfy@localhost MyLinux]$ ls
+test.c
+[hfy@localhost MyLinux]$ git push origin master
+Username for 'https://github.com': BrickMyself
+Password for 'https://BrickMyself@github.com': 
+Counting objects: 3, done.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 640 bytes | 0 bytes/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To https://github.com/BrickMyself/MyLinux.git
+ * [new branch]      master -> master
+[hfy@localhost MyLinux]$ 
+
