@@ -1,0 +1,110 @@
+//fread
+#include<stdio.h>
+int main()
+{
+        int i=0;
+        int fp=0;
+        int fp2;
+        FILE*fp1=NULL;
+        fp1=fopen("./txt.txt","a+");//追加读写的打开方式  文件不存咋则创建
+        char buf[1024];
+        fp=fread(buf,sizeof(char),10,fp1);
+        printf("读取的块个数(字符)为： %d个 \n",fp);
+        for(i=0;i<fp;i++)
+        {
+        printf("%c ",buf[i]);
+        }
+        printf("\n");
+        fp2=fwrite(buf,sizeof(char),5,fp1);
+        printf("成功写入的块个数为：%d个 \n",fp2);//查看成功写入的块个数 这里 一个char是一个块 即看写入几个字符
+        return 0;
+}
+//test fflush
+#include<stdio.h>
+int main()
+{
+        int i;
+        FILE*fp=NULL;
+        fp=fopen("./testfflush.txt","a+");
+
+        char ptr[6]={'h','e','l','l','o'};
+        fwrite(ptr,1,6,fp);
+
+        //int temp=fflush(fp);//刷新之后才会写入到文件中  若不刷新则读取不到入的内容
+
+        //if(temp==0)
+        //{
+        //      printf("fflush success\n");
+        //}
+        //else
+        //{
+        //      perror("fflush error\n");
+        //}
+
+        fp=fopen("./testfflush.txt","a+");
+        char ptr1[6];
+        int ret=fread(ptr1,1,5,fp);
+        printf("读取到写入的数据 %d 块 数据为：\n",ret);
+        for(i=0;i<ret;i++)
+        {
+                printf("%c ",ptr1[i]);
+        }
+        fclose(fp);
+        return 0;
+}
+//test fseek
+#include<stdio.h>
+int main()
+{
+        int i,j;
+        FILE*fp=NULL;
+        FILE*fp1=NULL;
+        FILE*fp2=NULL;
+        if(fp==0)
+        {
+                perror("fopen error\n");
+        }
+        else
+        {
+                printf("fopen success\n");
+        }
+        printf("写入的数据为: h e l l 0\n");
+        char buf[6]={'h','e','l','l','0'};
+        int temp=fwrite(buf,1,5,fp);//将buf 中的数据写入到 文件中
+        printf("写入的文件为 %d\n",temp);
+        fclose(fp);
+        fp1=fopen("./txt.txt","a+");
+        char buf1[1024];
+        int set=fread(buf1,1,5,fp1);//读取文件中的 内容 到buf1中
+        printf("读取到文件中的内容为:  %d块\n",set);
+        for(i=0;i<set;i++)
+        {
+                printf("%c ",buf1[i]);//对buf1中的数据打印查看
+        }
+        printf("\n");
+        fclose(fp1);
+        fp2=fopen("./txt.txt","r+");
+        int set3=fseek(fp2,2,SEEK_SET);//设置文件的读写位置 相对于文件的开始 偏移 2个字节 相当于在文件的开始位置的第二>个字节
+        if(set3==-1)
+        {
+                perror("fseek error\n");
+        }
+        if(set3==0)
+        {
+                printf("fseek success\n");
+        }
+        int set4=fwrite(buf,1,5,fp2);//将 buf中的数据再次写入到设置号文件位置指示器的文件中
+        printf("重新设置文件位置之后进行写入之后的文件数据：%d块 \n",set4);
+        fclose(fp2);
+        fp3=fopen("./txt.txt","a+");
+        char buf2[1023];
+        int set5=fread(buf2,1,1023,fp3);
+        printf("重新写后入的数据为 %d 块\n",set5);
+        for(j=0;j<set5;j++)
+        {
+                printf("%c ",buf2[j]);
+        }
+        printf("\n");
+        fclose(fp3);//关闭文件
+        return 0;
+}
